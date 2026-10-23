@@ -1,0 +1,14 @@
+{
+  "name": "war-and-peace-reader",
+  "version": "1.0.0",
+  "description": "Kindle-style web reader for the modern Korean translation of War and Peace",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build-data": "node scripts/build-data.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

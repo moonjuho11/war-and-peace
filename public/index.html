@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <title>전쟁과 평화</title>
+  <meta name="description" content="레프 톨스토이 《전쟁과 평화》 현대어 번역 리더">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="전쟁과 평화">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;700&family=Noto+Serif+KR:wght@400;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="white">
+  <div id="app">
+    <div id="runninghead" aria-hidden="true"></div>
+
+    <main id="viewport" aria-live="polite">
+      <div id="content"></div>
+      <div id="ribbon" hidden aria-hidden="true"></div>
+    </main>
+
+    <button id="status" type="button" aria-label="진행 표시 방식 바꾸기">
+      <span id="status-left"></span>
+      <span id="status-right"></span>
+    </button>
+
+    <!-- Toolbars shown on a center tap -->
+    <header id="topbar" class="chrome" hidden>
+      <button class="icon-btn" id="btn-toc" type="button" aria-label="목차">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h11"/></svg>
+      </button>
+      <div id="topbar-title">
+        <strong>전쟁과 평화</strong>
+        <span id="topbar-sub"></span>
+      </div>
+      <button class="icon-btn" id="btn-settings" type="button" aria-label="글꼴과 화면 설정">
+        <span class="aa">가<small>가</small></span>
+      </button>
+      <button class="icon-btn" id="btn-bookmark" type="button" aria-label="북마크">
+        <svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg>
+      </button>
+    </header>
+
+    <footer id="bottombar" class="chrome" hidden>
+      <div id="scrub-label"></div>
+      <div class="scrub-row">
+        <button class="icon-btn small" id="btn-prev-ch" type="button" aria-label="이전 장">
+          <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <input id="scrub" type="range" min="0" max="1000" step="1" value="0" aria-label="책 안에서 위치 이동">
+        <button class="icon-btn small" id="btn-next-ch" type="button" aria-label="다음 장">
+          <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </footer>
+
+    <!-- Contents / bookmarks drawer -->
+    <div id="scrim" hidden></div>
+    <aside id="drawer" aria-label="목차" hidden>
+      <div class="drawer-head">
+        <div class="cover-mini">
+          <span>전쟁과<br>평화</span>
+        </div>
+        <div>
+          <strong>전쟁과 평화</strong>
+          <span>레프 톨스토이 · 현대어 번역</span>
+          <span id="drawer-progress"></span>
+        </div>
+        <button class="icon-btn" id="btn-close-drawer" type="button" aria-label="닫기">
+          <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="tabs" role="tablist">
+        <button role="tab" class="tab active" data-tab="toc" type="button">목차</button>
+        <button role="tab" class="tab" data-tab="marks" type="button">북마크</button>
+      </div>
+      <div id="toc-list" class="drawer-body"></div>
+      <div id="marks-list" class="drawer-body" hidden></div>
+    </aside>
+
+    <!-- Display settings sheet -->
+    <section id="sheet" aria-label="화면 설정" hidden>
+      <div class="sheet-grip"></div>
+      <div class="row">
+        <span class="label">글자 크기</span>
+        <div class="stepper">
+          <button type="button" id="font-down" aria-label="글자 작게">가</button>
+          <div id="size-dots" aria-hidden="true"></div>
+          <button type="button" id="font-up" aria-label="글자 크게" class="big">가</button>
+        </div>
+      </div>
+      <div class="row">
+        <span class="label">글꼴</span>
+        <div class="seg" id="seg-font">
+          <button type="button" data-v="serif" style="font-family:'Noto Serif KR',serif">명조</button>
+          <button type="button" data-v="batang" style="font-family:'Gowun Batang',serif">바탕</button>
+          <button type="button" data-v="sans" style="font-family:'Noto Sans KR',sans-serif">고딕</button>
+        </div>
+      </div>
+      <div class="row">
+        <span class="label">줄 간격</span>
+        <div class="seg" id="seg-leading">
+          <button type="button" data-v="1.55" aria-label="좁게"><i class="lines tight"></i></button>
+          <button type="button" data-v="1.8" aria-label="보통"><i class="lines"></i></button>
+          <button type="button" data-v="2.1" aria-label="넓게"><i class="lines loose"></i></button>
+        </div>
+      </div>
+      <div class="row">
+        <span class="label">여백</span>
+        <div class="seg" id="seg-margin">
+          <button type="button" data-v="s">좁게</button>
+          <button type="button" data-v="m">보통</button>
+          <button type="button" data-v="l">넓게</button>
+        </div>
+      </div>
+      <div class="row">
+        <span class="label">배경</span>
+        <div class="themes" id="seg-theme">
+          <button type="button" data-v="white" aria-label="흰색"><span>가</span></button>
+          <button type="button" data-v="sepia" aria-label="세피아"><span>가</span></button>
+          <button type="button" data-v="green" aria-label="초록"><span>가</span></button>
+          <button type="button" data-v="black" aria-label="검정"><span>가</span></button>
+        </div>
+      </div>
+      <div class="row">
+        <span class="label">넘김 효과</span>
+        <div class="seg" id="seg-anim">
+          <button type="button" data-v="slide">밀기</button>
+          <button type="button" data-v="none">없음</button>
+        </div>
+      </div>
+    </section>
+
+    <div id="toast" role="status" hidden></div>
+    <div id="loading">불러오는 중…</div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

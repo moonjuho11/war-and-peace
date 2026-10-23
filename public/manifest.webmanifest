@@ -1,0 +1,9 @@
+{
+  "name": "전쟁과 평화",
+  "short_name": "전쟁과 평화",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}
