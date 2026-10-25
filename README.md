@@ -23,6 +23,14 @@ npm start            # http://localhost:3000
 3. Railway detects Node and runs `npm start` (also set in `railway.json`, with a `/healthz` health check). No environment variables are needed; Railway provides `PORT`.
 4. Open the service's **Settings → Networking → Generate Domain** to get a public URL.
 
+## Publish on GitHub Pages
+
+The reader is fully static, so GitHub Pages can host it without the Node server.
+`.github/workflows/pages.yml` publishes `public/` on every push to `main`.
+Turn it on once in **Settings → Pages → Build and deployment → Source: GitHub Actions**;
+the site is then at `https://<user>.github.io/war-and-peace/`.
+(Pages on a private repository needs a paid GitHub plan; on a free plan make the repository public.)
+
 ## Updating the text
 
 The source text lives in `book/` (one file per book, chapters headed `제N장`).
